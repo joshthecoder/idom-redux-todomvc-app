@@ -14,6 +14,13 @@ export function deleteTodo(id) {
   };
 }
 
+export function startEditingTodo(id) {
+  return {
+    type: types.START_EDITING_TODO,
+    id
+  };
+}
+
 export function editTodo(id, text) {
   return {
     type: types.EDIT_TODO,

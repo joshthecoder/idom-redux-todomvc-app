@@ -1,25 +1,11 @@
-import React, { PropTypes, Component } from 'react';
+import {elementOpen, elementClose, text} from 'incremental-dom';
 import TodoTextInput from './TodoTextInput';
 
-export default class Header extends Component {
-  static propTypes = {
-    addTodo: PropTypes.func.isRequired
-  };
-
-  handleSave(text) {
-    if (text.length !== 0) {
-      this.props.addTodo(text);
-    }
-  }
-
-  render() {
-    return (
-      <header className='header'>
-          <h1>todos</h1>
-          <TodoTextInput newTodo={true}
-                         onSave={::this.handleSave}
-                         placeholder='What needs to be done?' />
-      </header>
-    );
-  }
-}
+export default function({addTodo}) {
+  elementOpen('header', null, null, 'class', 'header');
+    elementOpen('h1');
+      text('todos');
+    elementClose('h1');
+    TodoTextInput({newTodo: true});
+  elementClose('header');
+};

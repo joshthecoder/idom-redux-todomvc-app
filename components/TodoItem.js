@@ -1,68 +1,46 @@
-import React, { Component, PropTypes } from 'react';
+import {elementOpen, elementClose, elementVoid, text, patch} from 'incremental-dom';
 import classnames from 'classnames';
 import TodoTextInput from './TodoTextInput';
 
-export default class TodoItem extends Component {
-  static propTypes = {
-    todo: PropTypes.object.isRequired,
-    editTodo: PropTypes.func.isRequired,
-    deleteTodo: PropTypes.func.isRequired,
-    markTodo: PropTypes.func.isRequired
-  };
+export default function TodoItem(props) {
+  const {todo, editing} = props;
 
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      editing: false
-    };
+  elementOpen('li', null, null, 'class', classnames({
+    completed: todo.marked,
+    editing
+  }));
+    editing ? EditView(props) : ReadView(props);
+  elementClose('li');
+};
+
+function ReadView({todo, startEditingTodo}) {
+  function onDoubleClick() {
+    startEditingTodo(todo.id);
+
+    // TODO: Better way of access the real DOM element of a component?
+    // Here we want to focus the input field and set the curor to the end
+    const input = document.querySelector('.edit');
+    input.focus();
+    input.setSelectionRange(input.value.length, input.value.length);
   }
 
-  handleDoubleClick() {
-    this.setState({ editing: true });
-  }
+  elementOpen('div', null, ['class', 'view']);
+    elementVoid('input', null, ['class', 'toggle', 'type', 'checkbox']);
+    elementOpen('label', null, null, 'ondblclick', onDoubleClick);
+      text(todo.text);
+    elementClose('label');
+    elementVoid('button', null, ['class', 'destroy']);
+  elementClose('div');
+}
 
-  handleSave(id, text) {
+function EditView({todo, editTodo, deleteTodo}) {
+  function onSave(text) {
     if (text.length === 0) {
-      this.props.deleteTodo(id);
+      deleteTodo(todo.id);
     } else {
-      this.props.editTodo(id, text);
+      editTodo(todo.id, text);
     }
-    this.setState({ editing: false });
   }
 
-  render() {
-    const {todo, markTodo, deleteTodo} = this.props;
-
-    let element;
-    if (this.state.editing) {
-      element = (
-        <TodoTextInput text={todo.text}
-                       editing={this.state.editing}
-                       onSave={(text) => this.handleSave(todo.id, text)} />
-      );
-    } else {
-      element = (
-        <div className='view'>
-          <input className='toggle'
-                 type='checkbox'
-                 checked={todo.marked}
-                 onChange={() => markTodo(todo.id)} />
-          <label onDoubleClick={::this.handleDoubleClick}>
-            {todo.text}
-          </label>
-          <button className='destroy'
-                  onClick={() => deleteTodo(todo.id)} />
-        </div>
-      );
-    }
-
-    return (
-      <li className={classnames({
-        completed: todo.marked,
-        editing: this.state.editing
-      })}>
-        {element}
-      </li>
-    );
-  }
+  TodoTextInput({text: todo.text, editing: true, onSave});
 }

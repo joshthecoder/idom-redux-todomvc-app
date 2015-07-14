@@ -1,3 +1,4 @@
 import 'todomvc-app-css/index.css';
+import App from './containers/App';
 
-// TODO: render app
+App(document.getElementById('root'));

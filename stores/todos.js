@@ -4,6 +4,11 @@ const initialState = [{
   text: 'Use Redux',
   marked: false,
   id: 0
+},
+{
+  text: 'Use Incremental DOM',
+  marked: false,
+  id: 1
 }];
 
 export default function todos(state = initialState, action) {
