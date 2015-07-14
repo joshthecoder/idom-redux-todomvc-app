@@ -1,35 +1,28 @@
 {
-  "name": "todomvc",
+  "name": "idom-redux-todomvc-app",
   "version": "0.0.0",
-  "description": "TodoMVC example for redux",
+  "description": "TodoMVC example for incremental-dom & redux",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gaearon/redux.git"
+    "url": "https://github.com/joshthecoder/idom-redux-todomvc-app.git"
   },
   "keywords": [
-    "react",
-    "reactjs",
-    "hot",
-    "reload",
-    "hmr",
-    "live",
-    "edit",
+    "incremental-dom",
+    "redux",
     "webpack",
     "flux",
     "todomvc"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gaearon/redux/issues"
+    "url": "https://github.com/joshthecoder/idom-redux-todomvc-app/issues"
   },
-  "homepage": "https://github.com/gaearon/redux#readme",
   "dependencies": {
     "classnames": "^2.1.2",
-    "react": "^0.13.3",
     "redux": "^0.12.0"
   },
   "devDependencies": {
@@ -37,7 +30,6 @@
     "babel-loader": "^5.1.4",
     "node-libs-browser": "^0.5.2",
     "raw-loader": "^0.5.1",
-    "react-hot-loader": "^1.2.7",
     "style-loader": "^0.12.3",
     "todomvc-app-css": "^2.0.1",
     "webpack": "^1.9.11",
